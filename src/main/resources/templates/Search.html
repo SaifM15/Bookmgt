@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Search Books</title>
+</head>
+<body>
+    <h1>Search Books</h1>
+    <form method="get" action="/books/search">
+        <select name="filter">
+            <option value="title">Title</option>
+            <option value="author">Author</option>
+            <option value="genre">Genre</option>
+        </select>
+        <input type="text" name="query" placeholder="Search">
+        <button type="submit">Search</button>
+    </form>
+    <ul>
+        <li th:each="book : ${books}">
+            <span th:text="${book.title}"></span> by
+            <span th:text="${book.author}"></span> [<span th:text="${book.genre}"></span>]
+        </li>
+    </ul>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Book Search</title>
+</head>
+<body>
+    <h1>Library Book Search</h1>
+
+    <h2>Search by Title</h2>
+    <input type="text" id="titleSearch" placeholder="Enter title">
+    <button onclick="searchByTitle()">Search</button>
+
+    <h2>Search by Author</h2>
+    <input type="text" id="authorSearch" placeholder="Enter author">
+    <button onclick="searchByAuthor()">Search</button>
+
+    <h2>Search by Genre</h2>
+    <input type="text" id="genreSearch" placeholder="Enter genre">
+    <button onclick="searchByGenre()">Search</button>
+
+    <h2>Book Results</h2>
+    <div id="results"></div>
+
+    <script>
+        function searchByTitle() {
+            let title = document.getElementById("titleSearch").value;
+            fetch(`http://localhost:8080/api/books/search/title?title=${title}`)
+                .then(response => response.json())
+                .then(data => displayResults(data));
+        }
+
+        function searchByAuthor() {
+            let author = document.getElementById("authorSearch").value;
+            fetch(`http://localhost:8080/api/books/search/author?author=${author}`)
+                .then(response => response.json())
+                .then(data => displayResults(data));
+        }
+
+        function searchByGenre() {
+            let genre = document.getElementById("genreSearch").value;
+            fetch(`http://localhost:8080/api/books/search/genre?genre=${genre}`)
+                .then(response => response.json())
+                .then(data => displayResults(data));
+        }
+
+        function displayResults(books) {
+            const resultsDiv = document.getElementById("results");
+            resultsDiv.innerHTML = '';
+            books.forEach(book => {
+                resultsDiv.innerHTML += `<p>${book.title} by ${book.author} (${book.genre}, ${book.yearPublished})</p>`;
+            });
+        }
+    </script>
+</body>
+</html>
